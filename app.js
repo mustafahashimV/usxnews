@@ -1,6 +1,4 @@
 const dotenv = require("dotenv").config()
-const express = require("express")
-const app = express();
 const { TelegramClient } = require('telegram')
 const { StringSession } = require('telegram/sessions')
 const input = require('input')
@@ -28,8 +26,6 @@ const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBuxeBJs9YMuHXKh
   return replacedText.replace(/الجزيرة مباشر/g, "الأنباء الأمريكية");
 }
 
-// ...
-
 const modifiedText = replaceText(inputString);
 function removeWord(inputText){
             return inputText.replace(/عاجل \|?/g, "")
@@ -37,15 +33,6 @@ function removeWord(inputText){
 
 const fMsg = removeWord(modifiedText);
 client.sendMessage("usxbreaking", { message: `🚨${fMsg}` });
-
-
-        
         }
 });
-
-
 })()
-
-app.get("/", (req,res)=> {
-  res.json("main")
-}).listen(3000)
