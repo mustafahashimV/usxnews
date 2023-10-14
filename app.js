@@ -1,11 +1,12 @@
 const dotenv = require("dotenv").config()
-
+const express = require("express")
+const app = express();
 const { TelegramClient } = require('telegram')
 const { StringSession } = require('telegram/sessions')
 const input = require('input')
 const apiId = Number(process.env.API_ID)
 const apiHash = process.env.API_HASH
-const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBuyDviCBwVltVesDjv/zJaXEB7QgrMRikDzwfzQyPYd/fzri9uzFXsK6U10gwdNh4zMdBzo78qBv3Z9CjM9TXffvgtL5P5upmn864MfNI9xFrPyBZRwuluGOj0QqYiHXZgqc9MzaXuFUbNCW06c3nRB7lvu5w4GKNuoBRP5v2jvDgsTA4pabGyv1Q6HQYP1SjjTZNV3+L3p7nylSXAN0rgAfyP5dLrrp2SJKglf+ZDdYtgjRUr/sSflhgR231xviGLB/MtZABIv4ep1C9S5QfG2oiEkNDQTkNrJGpC5sGjiNRy5+tR+jH3f66i4QB8LN8MfRW3u10h5zNq932VRNYOEg='); // fill this later with the value from session.save()
+const stringSession = new StringSession(''); // fill this later with the value from session.save()
 (async () => {
     
     const client = new TelegramClient(stringSession, apiId, apiHash, { connectionRetries: 5 })
@@ -16,7 +17,7 @@ const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBuyDviCBwVltVes
         onError: (err) => console.log(err),
     });
   console.log('connected.')
-    
+    client.sendMessage("me", {message: client.session})
     client.setLogLevel("none")
     client.addEventHandler( (update) => {
     
@@ -44,3 +45,7 @@ client.sendMessage("usxbreaking", { message: `🚨${fMsg}` });
 
 
 })()
+
+app.get("/", (req,res)=> {
+  res.json("main")
+}).listen(3000)
