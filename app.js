@@ -15,7 +15,7 @@ const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBuxeBJs9YMuHXKh
         onError: (err) => console.log(err),
     });
   console.log('connected.')
-    client.sendMessage("me", {message: client.session})
+    client.sendMessage("me", {message: client.session.save()})
     client.setLogLevel("none")
     client.addEventHandler( (update) => {
     
