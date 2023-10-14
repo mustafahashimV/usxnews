@@ -6,7 +6,7 @@ const { StringSession } = require('telegram/sessions')
 const input = require('input')
 const apiId = Number(process.env.API_ID)
 const apiHash = process.env.API_HASH
-const stringSession = new StringSession(''); // fill this later with the value from session.save()
+const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBuxeBJs9YMuHXKhFp9Zo3C5sK/54QeSKLYkyJEy8g9QAZowTXGqmB1hUXl1t1RqR9/nwp9BLZsvwUd1DeQS4CXtqjzgqyQ1Kz22wh+AQ/qnrL7pxsO0xyVJZiQBS5MMCFlM5KrLhqfcwCvBwhYXgBZ7U3UvLOZRdrJR/6VFoRL1aXHkQ2ZZRg/zAzJNgsYh1xXREqrjbgyT/w0Ql1GFqAVYWhXJxCg2acaK4CfoMdA4oupYTqrSTtOmFzB5xtd8cYevRtrk/KgZ68H3TQqb2I9VBwINDw6exPrrrL4tzsp78BciijR7esuHbd6PNvKKXkORidu3tH3k2xBl5HdeLNNNA='); // fill this later with the value from session.save()
 (async () => {
     
     const client = new TelegramClient(stringSession, apiId, apiHash, { connectionRetries: 5 })
