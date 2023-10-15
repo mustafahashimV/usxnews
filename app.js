@@ -2,6 +2,7 @@ const dotenv = require("dotenv").config()
 const { TelegramClient } = require('telegram')
 const { StringSession } = require('telegram/sessions')
 const input = require('input')
+const app = require("express").express()
 const job = require("./cron.js").job
 const apiId = Number(process.env.API_ID)
 const apiHash = process.env.API_HASH
@@ -37,4 +38,10 @@ client.sendMessage("usxbreaking", { message: `🚨${fMsg}` });
         }
 });
 })()
+
+app.get("/check", (req, res) => {
+  res.send("<p>Check Passed!</p>")
+})
+
+app.listen(80, ()=> console.log("listening..80"))
 job.start();
