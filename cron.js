@@ -11,8 +11,6 @@ const job = new cron.CronJob("*/14 * * * *", function(){
             console.error("restart failed")
         }
     })
-}).on("error", (err)=>{
-    console.error("error occurred from cron"+ err.message)
 })
 
 module.exports ={
