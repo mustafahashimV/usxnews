@@ -61,7 +61,7 @@ const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz
           inputString = inputString.replace(/اخـبـار الـكـرة الـعـالـمـيـة/g, "الأنباء الأمريكية")
           return inputString;
         }
-
+     console.log(message)
         const fMsg = processString(message);
 
         client.sendMessage("usxsport", { message: `${fMsg}` });
