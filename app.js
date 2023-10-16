@@ -35,7 +35,7 @@ const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz
 })();
 
 app.get("/check", (req, res) => {
-    res.status(200).send("<p>Check Passed!</p>").json("check passed!");
+    res.status(200)("<p>Check Passed!</p>").json("check passed!");
 });
 
 app.listen(3000, () => console.log("Listening on port 3000"));
