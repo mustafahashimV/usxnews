@@ -39,7 +39,7 @@ const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz
     client.sendMessage("me", {message: client.session.save()})
     client.setLogLevel("none")
     client.addEventHandler( async (update) => {
-    client.sendMessage("me", {message: update.message})
+  
     if(update.message.peerId.channelId ==1007704706n) {
         let message = update.message.message;
         function processString(inputString) {
@@ -54,6 +54,19 @@ const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz
 
         client.sendMessage("usxbreaking", { message: `🚨${fMsg}` });
         await rwClient.v2.tweet(fMsg)
+        } else if(update.message.peerId.channelId== 1844702414n) {
+          let message = update.message.message;
+          function processString(inputString) {
+            inputString = inputString.replace(/أخبار الكرة العالمية/g, 'الأنباء الأمريكية');
+            inputString = inputString.replace(/اخبار الكرة العالمية/g, 'للأنباء الأمريكية');
+            inputString = inputString.replace(/(https?|ftp):\/\/[^\s/$.?#].[^\s]*/g, '');
+            inputString = inputString.replace(/خـبـار الـكـرة الـعـالـمـيـة/g, "")
+            return inputString;
+          }
+  
+          const fMsg = processString(message);
+  
+          client.sendMessage("usxsport", { message: `🚨${fMsg}` });
         }
         
 });
