@@ -26,7 +26,8 @@ const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz
         let inputString = update.message.message;
         function replaceText(inputText) {
   const replacedText = inputText.replace(/للجزيرة مباشرة/g, "للأنباء الأمريكية");
-  return replacedText.replace(/الجزيرة مباشر/g, "الأنباء الأمريكية");
+  const replacedText2 = replaceText.replace(/للجزيرة مباشر/g, "للأنباء الامريكية")
+  return replacedText2.replace(/الجزيرة مباشر/g, "الأنباء الأمريكية");
 }
 
 const modifiedText = replaceText(inputString);
@@ -35,8 +36,20 @@ function removeWord(inputText){
         }
 
 const fMsg = removeWord(modifiedText);
-client.sendMessage("usxbreaking", { message: `🚨${fMsg}` });
+function isURL(str) {
+    var pattern = new RegExp('^(https?:\\/\\/)?' +
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' +
+      '((\\d{1,3}\\.){3}\\d{1,3}))' +
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' +
+      '(\\?[;&a-z\\d%_.~+=-]*)?' +
+      '(\\#[-a-z\\d_]*)?$', 'i');
+  
+    return pattern.test(str);
+  }
+  if(isURL(fMsg)==false){
+      client.sendMessage("usxbreaking", { message: `🚨${fMsg}` });
         }
+    }
 });
 })()
 
