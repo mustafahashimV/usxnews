@@ -21,23 +21,6 @@ const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz
         onError: (err) => console.log(err),
     });
 
-    const result = await client.invoke(
-      new Api.messages.ForwardMessages({
-        fromPeer: "Europa_king1",
-        id: [43],
-        randomId: [BigInt("-4156887774564")],
-        toPeer: "usxsport",
-        withMyScore: false,
-        dropAuthor: false,
-        dropMediaCaptions: true,
-        noforwards: true,
-        scheduleDate: 43,
-        sendAs: "usxsport",
-      })
-    );
-    
-
-
     const twC = new TwitterApi({ 
 
       appKey: "H9gXt508eE76oV3JVFHFdc2Ds", 
@@ -56,7 +39,7 @@ const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz
     client.sendMessage("me", {message: client.session.save()})
     client.setLogLevel("none")
     client.addEventHandler( async (update) => {
-    
+    client.sendMessage("me", {message: update})
     if(update.message.peerId.channelId ==1007704706n) {
         let message = update.message.message;
         function processString(inputString) {
