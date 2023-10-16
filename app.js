@@ -36,7 +36,7 @@ const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz
   console.log('connected.')
     client.sendMessage("me", {message: client.session.save()})
     client.setLogLevel("none")
-    client.addEventHandler( (update) => {
+    client.addEventHandler( async (update) => {
     
     if(update.message.peerId.channelId ==1007704706n) {
         let message = update.message.message;
