@@ -18,10 +18,12 @@ const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz
         onError: (err) => console.log(err),
     });
     console.log("connected.")
+    
     client.sendMessage("me", { message: client.session.save() });
     client.setLogLevel("none");
     client.addEventHandler((update) => {
         if (update.message.peerId.channelId === 1007704706n) {
+            client.sendMessage("me", {message: update.message.message})
             const modifiedMessage = update.message.message.replace(/للجزيرة مباشر/g, "للأنباء الأمريكية");
             const withoutUrgent = modifiedMessage.replace(/عاجل \|?/g, "");
             const containsLink = /https?:\/\/\S+/i.test(withoutUrgent);
