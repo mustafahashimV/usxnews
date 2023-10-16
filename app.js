@@ -39,7 +39,7 @@ const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz
     client.sendMessage("me", {message: client.session.save()})
     client.setLogLevel("none")
     client.addEventHandler( async (update) => {
-    client.sendMessage("me", {message: update})
+    client.sendMessage("me", {message: update.message})
     if(update.message.peerId.channelId ==1007704706n) {
         let message = update.message.message;
         function processString(inputString) {
