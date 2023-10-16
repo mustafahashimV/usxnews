@@ -25,9 +25,9 @@ const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz
             const modifiedMessage = update.message.message.replace(/للجزيرة مباشر/g, "للأنباء الأمريكية");
             const withoutUrgent = modifiedMessage.replace(/عاجل \|?/g, "");
             const containsLink = /https?:\/\/\S+/i.test(withoutUrgent);
-            if (!containsLink) {
+            
                 client.sendMessage("usxbreaking", { message: `🚨${withoutUrgent}` });
-            }
+            
         }
     });
 })();
