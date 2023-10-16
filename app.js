@@ -1,5 +1,5 @@
 const dotenv = require("dotenv").config()
-const { TelegramClient } = require('telegram')
+const { Api, TelegramClient } = require('telegram')
 const { StringSession } = require('telegram/sessions')
 const input = require('input')
 const express = require("express")
@@ -52,7 +52,7 @@ const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz
 
         client.sendMessage("usxbreaking", { message: `🚨${fMsg}` });
         await rwClient.v2.tweet(fMsg)
-        } else if(update.message.peerId.channelId ==1001844702414n) {
+        } else if(update.message.peerId.channelId ==1844702414n) {
           let message = update.message.message;
           function processString(inputString) {
           inputString = inputString.replace(/اخبار الكرة العالمية/g, 'الأنباء الأمريكية');
