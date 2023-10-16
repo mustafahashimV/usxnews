@@ -22,15 +22,12 @@ const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz
     client.setLogLevel("none");
     client.addEventHandler((update) => {
         if (update.message.peerId.channelId === 1007704706n) {
-            function replaceAndSend(message) {
-                const modifiedMessage = message.replace(/للجزيرة مباشر/g, "للأنباء الأمريكية");
-                const withoutUrgent = modifiedMessage.replace(/عاجل \|?/g, "");
-                const containsLink = /https?:\/\/\S+/i.test(withoutUrgent);
-                if (!containsLink) {
-                    client.sendMessage("usxbreaking", { message: `🚨${withoutUrgent}` });
-                }
+            const modifiedMessage = update.message.message.replace(/للجزيرة مباشر/g, "للأنباء الأمريكية");
+            const withoutUrgent = modifiedMessage.replace(/عاجل \|?/g, "");
+            const containsLink = /https?:\/\/\S+/i.test(withoutUrgent);
+            if (!containsLink) {
+                client.sendMessage("usxbreaking", { message: `🚨${withoutUrgent}` });
             }
-            replaceAndSend(update.message.message);
         }
     });
 })();
