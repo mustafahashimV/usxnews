@@ -7,32 +7,9 @@ const app = express()
 const apiId = Number(process.env.API_ID)
 const apiHash = process.env.API_HASH
 
-const cron = require('cron');
-const https = require('https');
+const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz4OFPHreBI1X6awevbqBsvs9fdSs3TQAxzAWrmAx+3lVp2iSqwjGfzZ/yIbQgj5l5IXFw+ThC3SsnkE97yqNLUOrTpwyzmEOOGIc5wLa2cyRud8Jtgy/OWvP//pj2iY9lAv40+2MQr5CrQDxlRZvqdYwghFbJAD0n5fyMavSXcOZ7h4w4g7SN67Ab8vOpL7ihOXBzlBZD/bJF0Q0Sj6gPzmCObc5IfVHuiImz2JgW83ZYZXEmeCuqn+BahKgcUxwjZ/nxQFrwvp0LAEeTuI6G+IFCAtgDve7+8+ivCm8Z7LrGhGvqEjMjWls0DtW0kyAtQ4JFB/c3k=');
 
-const serverURL = 'https://usxnewsbot.onrender.com/';
-
-const job = new cron.CronJob('*/13 * * * *', function () {
-  sendRequest();
-});
-
-function sendRequest() {
-  https.get(serverURL, (res) => {
-    if (res.statusCode === 200) {
-      console.log(`Request to ${serverURL} successful at ${new Date()}`);
-    } else {
-      console.error(`Error sending request to ${serverURL} at ${new Date()}`);
-    }
-  }).on('error', (error) => {
-    console.error(`Request to ${serverURL} failed: ${error} at ${new Date()}`);
-  });
-}
-
-job.start();
-
-const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz4OFPHreBI1X6awevbqBsvs9fdSs3TQAxzAWrmAx+3lVp2iSqwjGfzZ/yIbQgj5l5IXFw+ThC3SsnkE97yqNLUOrTpwyzmEOOGIc5wLa2cyRud8Jtgy/OWvP//pj2iY9lAv40+2MQr5CrQDxlRZvqdYwghFbJAD0n5fyMavSXcOZ7h4w4g7SN67Ab8vOpL7ihOXBzlBZD/bJF0Q0Sj6gPzmCObc5IfVHuiImz2JgW83ZYZXEmeCuqn+BahKgcUxwjZ/nxQFrwvp0LAEeTuI6G+IFCAtgDve7+8+ivCm8Z7LrGhGvqEjMjWls0DtW0kyAtQ4JFB/c3k='); // fill this later with the value from session.save()
 (async () => {
-    
     const client = new TelegramClient(stringSession, apiId, apiHash, { connectionRetries: 5 })
     await client.start({
         phoneNumber: process.env.PHONE,
@@ -40,31 +17,26 @@ const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz
         phoneCode: async () => await input.text('Code ?'),
         onError: (err) => console.log(err),
     });
-  console.log('connected.')
-    client.sendMessage("me", {message: client.session.save()})
-    client.setLogLevel("none")
-    client.addEventHandler( (update) => {
-    
-    if(update.message.peerId.channelId ==1007704706n) {
-        let inputString = update.message.message;
-        function replaceText(inputText) {
-  const replacedText = inputText.replace(/للجزيرة مباشرة/g, "للأنباء الأمريكية");
-  return replacedText.replace(/الجزيرة مباشر/g, "الأنباء الأمريكية");
-}
 
-const modifiedText = replaceText(inputString);
-function removeWord(inputText){
-            return inputText.replace(/عاجل \|?/g, "")
+    client.sendMessage("me", { message: client.session.save() });
+    client.setLogLevel("none");
+    client.addEventHandler((update) => {
+        if (update.message.peerId.channelId === 1007704706n) {
+            function replaceAndSend(message) {
+                const modifiedMessage = message.replace(/للجزيرة مباشر/g, "للأنباء الأمريكية");
+                const withoutUrgent = modifiedMessage.replace(/عاجل \|?/g, "");
+                const containsLink = /https?:\/\/\S+/i.test(withoutUrgent);
+                if (!containsLink) {
+                    client.sendMessage("usxbreaking", { message: `🚨${withoutUrgent}` });
+                }
+            }
+            replaceAndSend(update.message.message);
         }
-
-const fMsg = removeWord(modifiedText);
-client.sendMessage("usxbreaking", { message: `🚨${fMsg}` });
-        }
-});
-})()
+    });
+})();
 
 app.get("/check", (req, res) => {
-  res.send("<p>Check Passed!</p>")
-})
+    res.send("<p>Check Passed!</p>");
+});
 
-app.listen(3000, ()=> console.log("listening..8080"))
+app.listen(3000, () => console.log("Listening on port 3000"));
