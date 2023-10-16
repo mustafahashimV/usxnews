@@ -23,33 +23,20 @@ const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz
     client.addEventHandler( (update) => {
     
     if(update.message.peerId.channelId ==1007704706n) {
-        let inputString = update.message.message;
-        function replaceText(inputText) {
-  const replacedText = inputText.replace(/للجزيرة مباشرة/g, "للأنباء الأمريكية");
-  const replacedText2 = replaceText.replace(/للجزيرة مباشر/g, "للأنباء الامريكية")
-  return replacedText2.replace(/الجزيرة مباشر/g, "الأنباء الأمريكية");
-}
-
-const modifiedText = replaceText(inputString);
-function removeWord(inputText){
-            return inputText.replace(/عاجل \|?/g, "")
+        let message = update.message.message;
+        function processString(inputString) {
+          inputString = inputString.replace(/الجزيرة مباشر/g, 'الأنباء الأمريكية');
+          inputString = inputString.replace(/للجزيرة مباشر/g, 'للأنباء الأمريكية');
+          inputString = inputString.replace(/(https?|ftp):\/\/[^\s/$.?#].[^\s]*/g, '');
+          inputString = inputString.replace(/عاجل \|?/g, "")
+          return inputString;
         }
 
-const fMsg = removeWord(modifiedText);
-function isURL(str) {
-    var pattern = new RegExp('^(https?:\\/\\/)?' +
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' +
-      '((\\d{1,3}\\.){3}\\d{1,3}))' +
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' +
-      '(\\?[;&a-z\\d%_.~+=-]*)?' +
-      '(\\#[-a-z\\d_]*)?$', 'i');
-  
-    return pattern.test(str);
-  }
-  if(isURL(fMsg)==false){
-      client.sendMessage("usxbreaking", { message: `🚨${fMsg}` });
+        const fMsg = processString(message);
+
+        client.sendMessage("usxbreaking", { message: `🚨${fMsg}` });
         }
-    }
+
 });
 })()
 
