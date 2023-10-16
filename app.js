@@ -1,3 +1,4 @@
+
 const dotenv = require("dotenv").config()
 const { Api, TelegramClient } = require('telegram')
 const { StringSession } = require('telegram/sessions')
@@ -19,6 +20,24 @@ const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz
         phoneCode: async () => await input.text('Code ?'),
         onError: (err) => console.log(err),
     });
+
+    const result = await client.invoke(
+      new Api.messages.ForwardMessages({
+        fromPeer: "Europa_king1",
+        id: [43],
+        randomId: [BigInt("-4156887774564")],
+        toPeer: "usxsport",
+        withMyScore: false,
+        dropAuthor: false,
+        dropMediaCaptions: true,
+        noforwards: true,
+        scheduleDate: 43,
+        sendAs: "usxsport",
+      })
+    );
+    
+
+
     const twC = new TwitterApi({ 
 
       appKey: "H9gXt508eE76oV3JVFHFdc2Ds", 
@@ -52,22 +71,8 @@ const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz
 
         client.sendMessage("usxbreaking", { message: `🚨${fMsg}` });
         await rwClient.v2.tweet(fMsg)
-        } else if(update.message.peerId.channelId ==1844702414n) {
-          let message = update.message.message;
-          function processString(inputString) {
-          inputString = inputString.replace(/اخبار الكرة العالمية/g, 'الأنباء الأمريكية');
-          inputString = inputString.replace(/أخبار الكرة العالمية/g, 'للأنباء الأمريكية');
-          inputString = inputString.replace(/(https?|ftp):\/\/[^\s/$.?#].[^\s]*/g, '');
-          inputString = inputString.replace(/اخـبـار الـكـرة الـعـالـمـيـة/g, "الأنباء الأمريكية")
-          return inputString;
-        }
-     console.log(message)
-        const fMsg = processString(message);
-
-        client.sendMessage("usxsport", { message: `${fMsg}` });
         }
         
-
 });
 })()
 
