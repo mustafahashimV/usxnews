@@ -17,7 +17,7 @@ const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz
         phoneCode: async () => await input.text('Code ?'),
         onError: (err) => console.log(err),
     });
-
+    console.log("connected.")
     client.sendMessage("me", { message: client.session.save() });
     client.setLogLevel("none");
     client.addEventHandler((update) => {
