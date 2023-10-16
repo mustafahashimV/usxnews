@@ -6,6 +6,30 @@ const express = require("express")
 const app = express()
 const apiId = Number(process.env.API_ID)
 const apiHash = process.env.API_HASH
+const cron = require('cron');
+const fetch = require('node-fetch');
+
+const serverURL = 'https://usxnewsbot.onrender.com/';
+
+const job = new cron.CronJob('*/13 * * * *', function () {
+  sendRequest();
+});
+
+function sendRequest() {
+  fetch(serverURL)
+    .then((response) => {
+      if (response.ok) {
+        console.log(`Request to ${serverURL} successful at ${new Date()}`);
+      } else {
+        console.error(`Error sending request to ${serverURL} at ${new Date()}`);
+      }
+    })
+    .catch((error) => {
+      console.error(`Request to ${serverURL} failed: ${error} at ${new Date()}`);
+    });
+}
+
+job.start();
 const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz4OFPHreBI1X6awevbqBsvs9fdSs3TQAxzAWrmAx+3lVp2iSqwjGfzZ/yIbQgj5l5IXFw+ThC3SsnkE97yqNLUOrTpwyzmEOOGIc5wLa2cyRud8Jtgy/OWvP//pj2iY9lAv40+2MQr5CrQDxlRZvqdYwghFbJAD0n5fyMavSXcOZ7h4w4g7SN67Ab8vOpL7ihOXBzlBZD/bJF0Q0Sj6gPzmCObc5IfVHuiImz2JgW83ZYZXEmeCuqn+BahKgcUxwjZ/nxQFrwvp0LAEeTuI6G+IFCAtgDve7+8+ivCm8Z7LrGhGvqEjMjWls0DtW0kyAtQ4JFB/c3k='); // fill this later with the value from session.save()
 (async () => {
     
