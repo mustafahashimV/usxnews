@@ -59,22 +59,22 @@ function processString(inputString) {
     client.addEventHandler( async (update) => {
     let mText = await processString(update.message.message);
     update.message.message = mText
-    let message = update.message
+    let post = update.message
     
-    function post(channelFrom, channelTo, text) {
+    function post(channelFrom, channelTo, media) {
     if(update.message.peerId.channelId==channelFrom){
-       client.sendMessage(`${channelTo}`, { message: text })
+       client.sendMessage(`${channelTo}`, { message: media ? post : mText })
       }
     }
 
     let channels = [
-      { source: 1007704706n, username: "usxbreaking" },
-      { source: 1844702414n, username: "usxsport" },
+      { source: 1007704706n, username: "usxbreaking", media: false},
+      { source: 1844702414n, username: "usxsport", media: true},
        
     ]
 
     await channels.forEach(channel => {
-      post(channel.source, channel.username, message);
+      post(channel.source, channel.username, channel.media);
     });
         
 });
