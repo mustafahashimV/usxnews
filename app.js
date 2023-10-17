@@ -55,7 +55,7 @@ const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz
         client.sendMessage("usxbreaking", { message: `🚨${fMsg}` });
       
         } else if(update.message.peerId.channelId== 1844702414n) {
-          let message = update.message.messageId;
+          let message = update.message.message;
           function processString(inputString) {
             inputString = inputString.replace(/أخبار الكرة العالمية/g, 'الأنباء الأمريكية');
             inputString = inputString.replace(/اخبار الكرة العالمية/g, 'للأنباء الأمريكية');
