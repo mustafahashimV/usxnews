@@ -72,12 +72,16 @@ async function processString(inputString) {
     let channels = [
       { source: 1007704706n, username: "usxbreaking", media: false},
       { source: 1844702414n, username: "usxsport", media: true},
-      { source: 1625429257n, username: "usxnews_en", media: true }
     ]
 
     await channels.forEach(channel => {
       post(channel.source, channel.username, channel.media);
     });
+    if(update.message.peerId.channelId ==1007704706n ) {
+      await translate(mText, null, "en").then(res => {
+        await client.sendMessage("usxnews_en", {message: res.translation})
+      })
+    }
         
 });
 })()
