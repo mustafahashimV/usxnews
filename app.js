@@ -1,4 +1,5 @@
 
+
 const dotenv = require("dotenv").config()
 const { Api, TelegramClient } = require('telegram')
 const { StringSession } = require('telegram/sessions')
@@ -11,6 +12,20 @@ const { TwitterApi } = require("twitter-api-v2");
 
 
 const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz4OFPHreBI1X6awevbqBsvs9fdSs3TQAxzAWrmAx+3lVp2iSqwjGfzZ/yIbQgj5l5IXFw+ThC3SsnkE97yqNLUOrTpwyzmEOOGIc5wLa2cyRud8Jtgy/OWvP//pj2iY9lAv40+2MQr5CrQDxlRZvqdYwghFbJAD0n5fyMavSXcOZ7h4w4g7SN67Ab8vOpL7ihOXBzlBZD/bJF0Q0Sj6gPzmCObc5IfVHuiImz2JgW83ZYZXEmeCuqn+BahKgcUxwjZ/nxQFrwvp0LAEeTuI6G+IFCAtgDve7+8+ivCm8Z7LrGhGvqEjMjWls0DtW0kyAtQ4JFB/c3k='); // fill this later with the value from session.save()
+
+function processString(inputString) {
+          inputString = inputString.replace(/الجزيرة مباشر/g, 'الأنباء الأمريكية');
+          inputString = inputString.replace(/للجزيرة مباشر/g, 'للأنباء الأمريكية');
+          inputString = inputString.replace(/(https?|ftp):\/\/[^\s/$.?#].[^\s]*/g, '');
+          inputString = inputString.replace(/عاجل \|?/g, "")
+
+inputString = inputString.replace(/أخبار الكرة العالمية/g, 'الأنباء الأمريكية');
+            inputString = inputString.replace(/اخبار الكرة العالمية/g, 'للأنباء الأمريكية');
+            inputString = inputString.replace(/(https?|ftp):\/\/[^\s/$.?#].[^\s]*/g, '');
+            inputString = inputString.replace(/خـبـار الـكـرة الـعـالـمـيـة/g, "")
+            return inputString;
+        }
+
 (async () => {
     
     const client = new TelegramClient(stringSession, apiId, apiHash, { connectionRetries: 5 })
@@ -42,13 +57,7 @@ const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz
   
     if(update.message.peerId.channelId ==1007704706n) {
         let message = update.message.message;
-        function processString(inputString) {
-          inputString = inputString.replace(/الجزيرة مباشر/g, 'الأنباء الأمريكية');
-          inputString = inputString.replace(/للجزيرة مباشر/g, 'للأنباء الأمريكية');
-          inputString = inputString.replace(/(https?|ftp):\/\/[^\s/$.?#].[^\s]*/g, '');
-          inputString = inputString.replace(/عاجل \|?/g, "")
-          return inputString;
-        }
+       
 
         const fMsg = processString(message);
 
@@ -56,13 +65,6 @@ const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz
       
         } else if(update.message.peerId.channelId== 1844702414n) {
           let messageX = update.message.message;
-          function processString(inputString) {
-            inputString = inputString.replace(/أخبار الكرة العالمية/g, 'الأنباء الأمريكية');
-            inputString = inputString.replace(/اخبار الكرة العالمية/g, 'للأنباء الأمريكية');
-            inputString = inputString.replace(/(https?|ftp):\/\/[^\s/$.?#].[^\s]*/g, '');
-            inputString = inputString.replace(/خـبـار الـكـرة الـعـالـمـيـة/g, "")
-            return inputString;
-          }
   
           const fMsg = await processString(messageX);
   
