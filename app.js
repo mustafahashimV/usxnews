@@ -60,7 +60,7 @@ function processString(inputString) {
     let message = await processString(update.message.message);
     
     function post(channelFrom, channelTo, text, prefix, suffix) {
-    if(update.message.peerId.channelId==channelTo){
+    if(update.message.peerId.channelId==channelFrom){
        client.sendMessage(`${channelTo}`, { message: `${prefix} ${text} \n ${suffix}` })
       }
     }
