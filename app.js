@@ -77,7 +77,7 @@ async function processString(inputString) {
     await channels.forEach(channel => {
       post(channel.source, channel.username, channel.media);
     });
-    if(update.message.peerId.channelId ==1007704706n ) {
+    if(update.message.peerId.channelId ==1691865575n ) {
       await translate(mText, null, "en").then(res => {
         await client.sendMessage("usxnews_en", {message: res.translation})
       })
