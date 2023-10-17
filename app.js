@@ -1,5 +1,6 @@
 
 
+
 const dotenv = require("dotenv").config()
 const { Api, TelegramClient } = require('telegram')
 const { StringSession } = require('telegram/sessions')
@@ -48,23 +49,31 @@ function processString(inputString) {
   
       bearerToken: "AAAAAAAAAAAAAAAAAAAAACA0qgEAAAAAZQsF1Z1j1jJLidXzBmmyCJdU7P0%3DQxVJcDd0eEy8IpB4ZytmXZMjAyNHGFdOnMYDwwyEcrXX2c6rkS", 
   }); 
-  const rwClient = twC.readWrite;
-
-  console.log('connected.')
+    const rwClient = twC.readWrite;
+ 
+    console.log('connected.')
     client.sendMessage("me", {message: client.session.save()})
     client.setLogLevel("none")
-    client.addEventHandler( async (update) => {
-  
-    if(update.message.peerId.channelId ==1007704706n) {
-        let message = update.message.message;
-        const fMsg = processString(message);
 
-        client.sendMessage("usxbreaking", { message: `🚨${fMsg}` });
-      
-        } else if(update.message.peerId.channelId== 1844702414n) {
-        
-          client.sendMessage("usxsport", { message: fMsg });
-        }
+
+    client.addEventHandler( async (update) => {
+    let message = await processString(update.message.message);
+    
+    function post(channelFrom, channelTo, text, prefix, suffix) {
+    if(update.message.peerId.channelId==channelTo){
+       client.sendMessage(`${channelTo}`, { message: `${prefix} ${text} \n ${suffix}` })
+      }
+    }
+
+    let sources = [1007704706n, 1844702414n]
+    let channels = [
+      { source: 1007704706n, username: "usxbreaking" },
+      { source: 1844702414n, username: "usxsport" }
+    ]
+
+    await channels.forEach(channel => {
+      post(channel.source, channel.username, message, "🚨", "");
+    });
         
 });
 })()
