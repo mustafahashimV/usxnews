@@ -57,12 +57,13 @@ function processString(inputString) {
 
 
     client.addEventHandler( async (update) => {
-    let message = await processString(update.message.message);
+    await update.message.message == processString(update.message.message);
+    let message = update.message
+    console.log(message)
     
     function post(channelFrom, channelTo, text, prefix, suffix) {
     if(update.message.peerId.channelId==channelFrom){
-      client.sendMessage("usxsport", {message: update.message})
-       client.sendMessage(`${channelTo}`, { message: `${prefix} ${text} \n ${suffix}` })
+       client.sendMessage(`${channelTo}`, { message: `${message}` })
       }
     }
 
