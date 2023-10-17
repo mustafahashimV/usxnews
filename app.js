@@ -66,7 +66,7 @@ const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz
   
           const fMsg = processString(messageX);
   
-          client.forwardMessages("usxsport", { message: messageX });
+          client.sendMessage("usxsport", { message: messageX });
         }
         
 });
