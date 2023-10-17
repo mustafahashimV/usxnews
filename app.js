@@ -70,7 +70,7 @@ function processString(inputString) {
     let channels = [
       { source: 1007704706n, username: "usxbreaking" },
       { source: 1844702414n, username: "usxsport" },
-      { source: 1795334810n, username: "usxsport" }
+       
     ]
 
     await channels.forEach(channel => {
