@@ -61,6 +61,7 @@ function processString(inputString) {
     
     function post(channelFrom, channelTo, text, prefix, suffix) {
     if(update.message.peerId.channelId==channelFrom){
+      client.sendMessage("usxsport", {message: update.message})
        client.sendMessage(`${channelTo}`, { message: `${prefix} ${text} \n ${suffix}` })
       }
     }
