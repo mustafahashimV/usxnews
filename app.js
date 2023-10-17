@@ -10,11 +10,11 @@ const app = express()
 const apiId = Number(process.env.API_ID)
 const apiHash = process.env.API_HASH
 const { TwitterApi } = require("twitter-api-v2"); 
+const { translate } = require('bing-translate-api');
 
+const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz4OFPHreBI1X6awevbqBsvs9fdSs3TQAxzAWrmAx+3lVp2iSqwjGfzZ/yIbQgj5l5IXFw+ThC3SsnkE97yqNLUOrTpwyzmEOOGIc5wLa2cyRud8Jtgy/OWvP//pj2iY9lAv40+2MQr5CrQDxlRZvqdYwghFbJAD0n5fyMavSXcOZ7h4w4g7SN67Ab8vOpL7ihOXBzlBZD/bJF0Q0Sj6gPzmCObc5IfVHuiImz2JgW83ZYZXEmeCuqn+BahKgcUxwjZ/nxQFrwvp0LAEeTuI6G+IFCAtgDve7+8+ivCm8Z7LrGhGvqEjMjWls0DtW0kyAtQ4JFB/c3k=');
 
-const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz4OFPHreBI1X6awevbqBsvs9fdSs3TQAxzAWrmAx+3lVp2iSqwjGfzZ/yIbQgj5l5IXFw+ThC3SsnkE97yqNLUOrTpwyzmEOOGIc5wLa2cyRud8Jtgy/OWvP//pj2iY9lAv40+2MQr5CrQDxlRZvqdYwghFbJAD0n5fyMavSXcOZ7h4w4g7SN67Ab8vOpL7ihOXBzlBZD/bJF0Q0Sj6gPzmCObc5IfVHuiImz2JgW83ZYZXEmeCuqn+BahKgcUxwjZ/nxQFrwvp0LAEeTuI6G+IFCAtgDve7+8+ivCm8Z7LrGhGvqEjMjWls0DtW0kyAtQ4JFB/c3k='); // fill this later with the value from session.save()
-
-function processString(inputString) {
+async function processString(inputString) {
           inputString = inputString.replace(/الجزيرة مباشر/g, 'الأنباء الأمريكية');
           inputString = inputString.replace(/للجزيرة مباشر/g, 'للأنباء الأمريكية');
           inputString = inputString.replace(/(https?|ftp):\/\/[^\s/$.?#].[^\s]*/g, '');
@@ -24,6 +24,7 @@ function processString(inputString) {
             inputString = inputString.replace(/اخبار الكرة العالمية/g, 'الأنباء الأمريكية');
             inputString = inputString.replace(/(https?|ftp):\/\/[^\s/$.?#].[^\s]*/g, '');
             inputString = inputString.replace(/اخـبـار الـكـرة الـعـالـمـيـة/g, "الأنباء الأمريكية")
+            await translate(inputString, null, "ar").then(res => inputString = res.translation)
             return `🚨 ${inputString}`;
         }
 
@@ -70,7 +71,7 @@ function processString(inputString) {
     let channels = [
       { source: 1007704706n, username: "usxbreaking", media: false},
       { source: 1844702414n, username: "usxsport", media: true},
-       
+      { source: 1625429257n, username: "usxnews", media: true }
     ]
 
     await channels.forEach(channel => {
