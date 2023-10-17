@@ -19,10 +19,10 @@ function processString(inputString) {
           inputString = inputString.replace(/(https?|ftp):\/\/[^\s/$.?#].[^\s]*/g, '');
           inputString = inputString.replace(/عاجل \|?/g, "")
 
-inputString = inputString.replace(/أخبار الكرة العالمية/g, 'الأنباء الأمريكية');
-            inputString = inputString.replace(/اخبار الكرة العالمية/g, 'للأنباء الأمريكية');
+            inputString = inputString.replace(/أخبار الكرة العالمية/g, 'الأنباء الأمريكية');
+            inputString = inputString.replace(/اخبار الكرة العالمية/g, 'الأنباء الأمريكية');
             inputString = inputString.replace(/(https?|ftp):\/\/[^\s/$.?#].[^\s]*/g, '');
-            inputString = inputString.replace(/خـبـار الـكـرة الـعـالـمـيـة/g, "")
+            inputString = inputString.replace(/اخـبـار الـكـرة الـعـالـمـيـة/g, "الأنباء الأمريكية")
             return inputString;
         }
 
@@ -66,9 +66,9 @@ inputString = inputString.replace(/أخبار الكرة العالمية/g, 'ا
         } else if(update.message.peerId.channelId== 1844702414n) {
           let messageX = update.message.message;
   
-          const fMsg = await processString(messageX);
+          const fMsgX = await processString(messageX);
   
-          client.sendMessage("usxsport", { message: fMsg });
+          client.sendMessage("usxsport", { message: fMsgX });
         }
         
 });
