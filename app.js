@@ -59,7 +59,7 @@ function processString(inputString) {
     client.addEventHandler( async (update) => {
     let mText = await processString(update.message.message);
     update.message.message = mText
-    let post = update.message
+    let message = update.message
     
     function post(channelFrom, channelTo, media) {
     if(update.message.peerId.channelId==channelFrom){
