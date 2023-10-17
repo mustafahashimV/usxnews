@@ -60,11 +60,10 @@ function processString(inputString) {
     let mText = await processString(update.message.message);
     update.message.message = mText
     let message = update.message
-    client.sendMessage("me", {message})
     
-    function post(channelFrom, channelTo, text, prefix, suffix) {
+    function post(channelFrom, channelTo, text) {
     if(update.message.peerId.channelId==channelFrom){
-       client.sendMessage(`${channelTo}`, { message: message })
+       client.sendMessage(`${channelTo}`, { message: text })
       }
     }
 
@@ -75,7 +74,7 @@ function processString(inputString) {
     ]
 
     await channels.forEach(channel => {
-      post(channel.source, channel.username, message, "🚨", "");
+      post(channel.source, channel.username, message);
     });
         
 });
