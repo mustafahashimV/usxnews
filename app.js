@@ -24,7 +24,7 @@ function processString(inputString) {
             inputString = inputString.replace(/اخبار الكرة العالمية/g, 'الأنباء الأمريكية');
             inputString = inputString.replace(/(https?|ftp):\/\/[^\s/$.?#].[^\s]*/g, '');
             inputString = inputString.replace(/اخـبـار الـكـرة الـعـالـمـيـة/g, "الأنباء الأمريكية")
-            return inputString;
+            return `🚨 ${inputString}`;
         }
 
 (async () => {
