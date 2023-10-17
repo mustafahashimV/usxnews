@@ -57,18 +57,13 @@ function processString(inputString) {
   
     if(update.message.peerId.channelId ==1007704706n) {
         let message = update.message.message;
-       
-
         const fMsg = processString(message);
 
         client.sendMessage("usxbreaking", { message: `🚨${fMsg}` });
       
         } else if(update.message.peerId.channelId== 1844702414n) {
-          let messageX = update.message.message;
-  
-          const fMsgX = await processString(messageX);
-  
-          client.sendMessage("usxsport", { message: fMsgX });
+        
+          client.sendMessage("usxsport", { message: fMsg });
         }
         
 });
