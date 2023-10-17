@@ -55,16 +55,14 @@ async function processString(inputString) {
     console.log('connected.')
     client.sendMessage("me", {message: client.session.save()})
     client.setLogLevel("none")
-
+    
 
     client.addEventHandler( async (update) => {
     let mText = await processString(update.message.message);
-    await translate(mText, null, "ar").then(res => {
-      mText = res.translation
-      client.sendMessage("me", {message: res.translation})
+    
       update.message.message = mText
       let message = update.message
-    })
+    
     function post(channelFrom, channelTo, media) {
     if(update.message.peerId.channelId==channelFrom){
        client.sendMessage(`${channelTo}`, { message: media ? post : mText })
@@ -74,7 +72,7 @@ async function processString(inputString) {
     let channels = [
       { source: 1007704706n, username: "usxbreaking", media: false},
       { source: 1844702414n, username: "usxsport", media: true},
-      { source: 1795334810n, username: "usxnews", media: true }
+      { source: 1625429257n, username: "usxnews_en", media: true }
     ]
 
     await channels.forEach(channel => {
