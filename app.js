@@ -72,7 +72,7 @@ async function processString(inputString) {
     let channels = [
       { source: 1007704706n, username: "usxbreaking", media: false},
       { source: 1844702414n, username: "usxsport", media: true},
-      { source: "me", username: "usxnews", media: true }
+      { source: 1795334810n, username: "usxnews", media: true }
     ]
 
     await channels.forEach(channel => {
