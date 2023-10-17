@@ -59,9 +59,11 @@ async function processString(inputString) {
 
     client.addEventHandler( async (update) => {
     let mText = await processString(update.message.message);
-    update.message.message = mText
-    let message = update.message
-    
+    await translate(mText, null, "ar").then(res => {
+      mText = res.translation
+      update.message.message = mText
+      let message = update.message
+    })
     function post(channelFrom, channelTo, media) {
     if(update.message.peerId.channelId==channelFrom){
        client.sendMessage(`${channelTo}`, { message: media ? post : mText })
