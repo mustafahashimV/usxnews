@@ -57,7 +57,7 @@ function processString(inputString) {
 
 
     client.addEventHandler( async (update) => {
-    await update.message.message == processString(update.message.message);
+    update.message.message = processString(update.message.message);
     let message = update.message
     console.log(message)
     
