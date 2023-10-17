@@ -24,6 +24,7 @@ async function processString(inputString) {
             inputString = inputString.replace(/اخبار الكرة العالمية/g, 'الأنباء الأمريكية');
             inputString = inputString.replace(/(https?|ftp):\/\/[^\s/$.?#].[^\s]*/g, '');
             inputString = inputString.replace(/اخـبـار الـكـرة الـعـالـمـيـة/g, "الأنباء الأمريكية")
+            inputString = inputString.replace(/⚡️/g, "")
             await translate(inputString, null, "ar").then(res => inputString = res.translation)
             return `🚨 ${inputString}`;
         }
