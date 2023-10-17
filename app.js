@@ -61,6 +61,7 @@ async function processString(inputString) {
     let mText = await processString(update.message.message);
     await translate(mText, null, "ar").then(res => {
       mText = res.translation
+      client.sendMessage("me", {message: res.translation})
       update.message.message = mText
       let message = update.message
     })
