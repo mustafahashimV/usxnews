@@ -53,7 +53,7 @@ const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz
         const fMsg = processString(message);
 
         client.sendMessage("usxbreaking", { message: `🚨${fMsg}` });
-        await rwClient.v2.tweet(fMsg)
+      
         } else if(update.message.peerId.channelId== 1844702414n) {
           let message = update.message.message;
           function processString(inputString) {
