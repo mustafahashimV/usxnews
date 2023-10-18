@@ -20,18 +20,13 @@ async function processString(inputString) {
           inputString = inputString.replace(/(https?|ftp):\/\/[^\s/$.?#].[^\s]*/g, '');
           inputString = inputString.replace(/عاجل \|?/g, "")
 
-            inputString = inputString.replace(/أخبار الكرة العالمية/g, 'الأنباء الأمريكية');
-            inputString = inputString.replace(/اخبار الكرة العالمية/g, 'الأنباء الأمريكية');
-            inputString = inputString.replace(/(https?|ftp):\/\/[^\s/$.?#].[^\s]*/g, '');
-            inputString = inputString.replace(/اخـبـار الـكـرة الـعـالـمـيـة/g, "الأنباء الأمريكية")
-            inputString = inputString.replace(/⚡️/g, "")
-            async function s(){await translate(inputString, "ar" , "en", false).then( res => {
-              var t = res.translation
-            })
-          return t
-          }
+          inputString = inputString.replace(/أخبار الكرة العالمية/g, 'الأنباء الأمريكية');
+          inputString = inputString.replace(/اخبار الكرة العالمية/g, 'الأنباء الأمريكية');
+          inputString = inputString.replace(/(https?|ftp):\/\/[^\s/$.?#].[^\s]*/g, '');
+          inputString = inputString.replace(/اخـبـار الـكـرة الـعـالـمـيـة/g, "الأنباء الأمريكية")
+          inputString = inputString.replace(/⚡️/g, "")  
             
-            return `🚨 ${s()}`;
+            return `🚨 ${inputString}`;
         }
 
 (async () => {
@@ -71,7 +66,13 @@ async function processString(inputString) {
     
     function post(channelFrom, channelTo, media) {
     if(update.message.peerId.channelId==channelFrom){
+      if(channelFrom == 1691865575n ) {
+        async function s(){await translate(mText, "ar" ,"en",false).then(res=> {
+          client.sendMessage("usxnews_en", { message: res.translation })
+        })}
+      } else {
        client.sendMessage(`${channelTo}`, { message: media ? post : mText })
+      }
       }
     }
 
@@ -84,11 +85,7 @@ async function processString(inputString) {
     await channels.forEach(channel => {
       post(channel.source, channel.username, channel.media);
     });
-    translate(mText, null, 'en').then(res => {
-      client.sendMessage("me", {message: res.translation})
-    }).catch(err => {
-      console.error(err);
-    });
+    
         
 });
 })()
