@@ -25,7 +25,11 @@ async function processString(inputString) {
             inputString = inputString.replace(/(https?|ftp):\/\/[^\s/$.?#].[^\s]*/g, '');
             inputString = inputString.replace(/اخـبـار الـكـرة الـعـالـمـيـة/g, "الأنباء الأمريكية")
             inputString = inputString.replace(/⚡️/g, "")
-            return `🚨 ${inputString}`;
+            async function s(){await translate(inputString, "ar" , "en", false).then( res => {
+              return res.translation
+            })}
+            
+            return `🚨 ${s()}`;
         }
 
 (async () => {
@@ -72,6 +76,7 @@ async function processString(inputString) {
     let channels = [
       { source: 1007704706n, username: "usxbreaking", media: false},
       { source: 1844702414n, username: "usxsport", media: true},
+      { source: 1691865575n, username: "usxnews_en", media: false }
     ]
 
     await channels.forEach(channel => {
@@ -82,11 +87,6 @@ async function processString(inputString) {
     }).catch(err => {
       console.error(err);
     });
-    if(update.message.peerId.channelId == 1691865575n) {
-      await translate(mText, null, "en").then(async res => {
-        await client.sendMessage("usxnews_en", {message: res.translation})
-      })
-    }
         
 });
 })()
