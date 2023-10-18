@@ -14,6 +14,22 @@ const { translate } = require('bing-translate-api');
 
 const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz4OFPHreBI1X6awevbqBsvs9fdSs3TQAxzAWrmAx+3lVp2iSqwjGfzZ/yIbQgj5l5IXFw+ThC3SsnkE97yqNLUOrTpwyzmEOOGIc5wLa2cyRud8Jtgy/OWvP//pj2iY9lAv40+2MQr5CrQDxlRZvqdYwghFbJAD0n5fyMavSXcOZ7h4w4g7SN67Ab8vOpL7ihOXBzlBZD/bJF0Q0Sj6gPzmCObc5IfVHuiImz2JgW83ZYZXEmeCuqn+BahKgcUxwjZ/nxQFrwvp0LAEeTuI6G+IFCAtgDve7+8+ivCm8Z7LrGhGvqEjMjWls0DtW0kyAtQ4JFB/c3k=');
 
+const { translate } = require('bing-translate-api');
+
+async function tr(to, text) {
+  try {
+    const res = await translate(text, null, to, false);
+    return res.translation;
+  } catch (error) {
+    
+    return "#The_American_News";
+  }
+}
+
+async function translateText(to, text) {
+  const translation = await tr(to, text);
+}
+
 async function processString(inputString) {
           inputString = inputString.replace(/الجزيرة مباشر/g, 'الأنباء الأمريكية');
           inputString = inputString.replace(/للجزيرة مباشر/g, 'للأنباء الأمريكية');
@@ -84,6 +100,10 @@ async function processString(inputString) {
       post(channel.source, channel.username, channel.media);
     });
     
+    if(update.message.peerId.channelId == 1691865575n){
+
+      await client.sendMessage("usxnews_en", { message: translateText("en", update.message.message) })
+    }
         
 });
 })()
