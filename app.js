@@ -101,8 +101,8 @@ async function processString(inputString) {
     });
     
     if(update.message.peerId.channelId == 1691865575n){
-
-      await client.sendMessage("usxnews_en", { message: translateText("en", update.message.message) })
+        msg = translateText("en", update.message.message)
+       client.sendMessage("usxnews_en", { message: msg })
     }
         
 });
