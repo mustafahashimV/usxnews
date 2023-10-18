@@ -17,6 +17,8 @@ const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz
 async function processString(inputString) {
           inputString = inputString.replace(/الجزيرة مباشر/g, 'الأنباء الأمريكية');
           inputString = inputString.replace(/للجزيرة مباشر/g, 'للأنباء الأمريكية');
+          inputString = inputString.replace(/للجزيرة/g, "للأنباء الأمريكية");
+          inputString = inputString.replace(/#الجزيرة/g, "#الانباء_الامريكية");
           inputString = inputString.replace(/(https?|ftp):\/\/[^\s/$.?#].[^\s]*/g, '');
           inputString = inputString.replace(/عاجل \|?/g, "")
 
@@ -26,7 +28,7 @@ async function processString(inputString) {
           inputString = inputString.replace(/اخـبـار الـكـرة الـعـالـمـيـة/g, "الأنباء الأمريكية")
           inputString = inputString.replace(/⚡️/g, "")  
             
-            return `🚨 ${inputString}`;
+            return `🚨${inputString}`;
         }
 
 (async () => {
@@ -67,7 +69,7 @@ async function processString(inputString) {
     function post(channelFrom, channelTo, media) {
     if(update.message.peerId.channelId==channelFrom){
 
-    client.sendMessage(`${channelTo}`, { message: media ? post : mText })
+    client.sendMessage(`${channelTo}`, { message: media ? message : mText })
       
       }
     }
