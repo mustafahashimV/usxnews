@@ -66,13 +66,9 @@ async function processString(inputString) {
     
     function post(channelFrom, channelTo, media) {
     if(update.message.peerId.channelId==channelFrom){
-      if(channelFrom == 1691865575n ) {
-        async function s(){await translate(mText, "ar" ,"en",false).then(async res => {
-         await client.sendMessage("usxnews_en", { message: res })
-        })}
-      } else {
-       client.sendMessage(`${channelTo}`, { message: media ? post : mText })
-      }
+
+    client.sendMessage(`${channelTo}`, { message: media ? post : mText })
+      
       }
     }
 
