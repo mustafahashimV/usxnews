@@ -26,8 +26,10 @@ async function processString(inputString) {
             inputString = inputString.replace(/اخـبـار الـكـرة الـعـالـمـيـة/g, "الأنباء الأمريكية")
             inputString = inputString.replace(/⚡️/g, "")
             async function s(){await translate(inputString, "ar" , "en", false).then( res => {
-              return res.translation
-            })}
+              var t = res.translation
+            })
+          return t
+          }
             
             return `🚨 ${s()}`;
         }
