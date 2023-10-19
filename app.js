@@ -43,7 +43,7 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
 
     const channels = [
         { source: 1007704706n, username: "usxbreaking", media: false }
-        // Add more channels as needed
+        
     ];
 
     const processedUpdates = new Set();
@@ -69,7 +69,7 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
             if (!update.message.message.includes("Translation Sent")) {
                 const translatedMessage = await translatte(mText, { to: "en" }).then(async res => {
                     await post(channels[0].source, channels[0].username, channels[0].media);
-                    await client.sendMessage(`usxnews_en`, { message: res.text + "\n\nTranslation Sent" });
+                    await client.sendMessage(`usxnews_en`, { message: res.text });
                 }).catch(error => {
                     client.sendMessage("me", { message: error });
                 });
