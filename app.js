@@ -1,3 +1,4 @@
+
 const dotenv = require("dotenv").config()
 const { Api, TelegramClient } = require('telegram')
 const { StringSession } = require('telegram/sessions')
@@ -55,6 +56,11 @@ async function processString(inputString) {
     update.message.message = mText;
     let message = update.message;
 
+const channels = [
+      { sourceChannelId: 1007704706n, targetChannelUsername: "usxbreaking", media: false },
+      { sourceChannelId: 1844702414n, targetChannelUsername: "usxsport", media: true },
+    ];
+
     function post(sourceChannelId, targetChannelUsername, media) {
       for (const channel of channels) {
         if (update.message.peerId.channelId === sourceChannelId) {
@@ -63,16 +69,11 @@ async function processString(inputString) {
       }
     }
 
-    // Define your channel mappings here
-    const channels = [
-      { sourceChannelId: 1007704706n, targetChannelUsername: "usxbreaking", media: false },
-      { sourceChannelId: 1844702414n, targetChannelUsername: "usxsport", media: true },
-      // Add more channel mappings as needed
-    ];
-
     for (const channel of channels) {
       post(channel.sourceChannelId, channel.targetChannelUsername, mapping.media);
     }
+
+
 
     if (update.message.peerId.channelId === 1691865575n) {
       msg = await translateText("en", update.message.message);
