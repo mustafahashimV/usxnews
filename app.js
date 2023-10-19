@@ -56,7 +56,7 @@ async function processString(inputString) {
     let message = update.message;
 
     function post(sourceChannelId, targetChannelUsername, media) {
-      for (const mapping of channelMappings) {
+      for (const channel of channels) {
         if (update.message.peerId.channelId === sourceChannelId) {
           client.sendMessage(targetChannelUsername, { message: media ? message : mText });
         }
@@ -64,14 +64,14 @@ async function processString(inputString) {
     }
 
     // Define your channel mappings here
-    const channelMappings = [
+    const channels = [
       { sourceChannelId: 1007704706n, targetChannelUsername: "usxbreaking", media: false },
       { sourceChannelId: 1844702414n, targetChannelUsername: "usxsport", media: true },
       // Add more channel mappings as needed
     ];
 
-    for (const mapping of channelMappings) {
-      post(mapping.sourceChannelId, mapping.targetChannelUsername, mapping.media);
+    for (const channel of channels) {
+      post(channel.sourceChannelId, channel.targetChannelUsername, mapping.media);
     }
 
     if (update.message.peerId.channelId === 1691865575n) {
@@ -79,12 +79,7 @@ async function processString(inputString) {
       client.sendMessage("usxnews_en", { message: msg });
     }
 
-    // Check if the message is coming from "usx_breaking" and send it to "usxnews_en"
-    if (update.message.peerId.channelId === 1007704706n) {
-      const translatedMessage = await translateText("en", update.message.message);
-      client.sendMessage("usxnews_en", { message: translatedMessage });
-    }
-  });
+
 })();
 
 
