@@ -57,20 +57,20 @@ async function processString(inputString) {
     let message = update.message;
 
 const channels = [
-      { sourceChannelId: 1007704706n, "usxbreaking": "usxbreaking", media: false },
-      { sourceChannelId: 1844702414n, "usxsport": "usxsport", media: true },
+      { sourceChannelId: 1007704706n, username: "usxbreaking", media: false },
+      { sourceChannelId: 1844702414n, username: "usxsport", media: true },
     ];
 
-    function post(sourceChannelId, targetChannelUsername, media) {
+    function post(sourceChannelId, username, media) {
       for (const channel of channels) {
         if (update.message.peerId.channelId === sourceChannelId) {
-          client.sendMessage(targetChannelUsername, { message: media ? message : mText });
+          client.sendMessage(username, { message: media ? message : mText });
         }
       }
     }
 
     for (const channel of channels) {
-      post(channel.sourceChannelId, channel.targetChannelUsername, mapping.media);
+      post(channel.sourceChannelId, channel.username, mapping.media);
     }
 
 
