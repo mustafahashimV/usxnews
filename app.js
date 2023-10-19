@@ -1,7 +1,3 @@
-
-
-
-
 const dotenv = require("dotenv").config()
 const { Api, TelegramClient } = require('telegram')
 const { StringSession } = require('telegram/sessions')
@@ -44,49 +40,39 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
     console.log('connected.')
     client.sendMessage("me", {message: client.session.save()})
     client.setLogLevel("none")
-    
-    // ...
 
-client.addEventHandler(async (update) => {
-  let mText = await filter.filter(update.message.message);
-  update.message.message = mText;
+    const channels = [
+        { source: 1007704706n, username: "usxbreaking", media: false }
+        // Add more channels as needed
+    ];
 
-  let message = update.message;
+    client.addEventHandler(async (update) => {
+        let mText = await filter.filter(update.message.message);
+        update.message.message = mText;
 
-  async function post(channelFrom, channelTo, media) {
-    if (update.message.peerId.channelId == channelFrom) {
-      await client.sendMessage(`${channelTo}`, { message: media ? message : mText });
-    }
-  }
+        async function post(channelFrom, channelTo, media) {
+            if (update.message.peerId.channelId == channelFrom) {
+                await client.sendMessage(`${channelTo}`, { message: media ? message : mText });
+            }
+        }
 
-  let channels = [
-    { source: 1007704706n, username: "usxbreaking", media: false },
-    { source: 1844702414n, username: "usxsport", media: true },
-  ]
-   let channelSourceId = update.message.peerId.channelId
-  if (channelSourceId == channels[0].source) {
-    const translatedMessage = await translatte(mText, {to:"en"}).then(async res => {
-       await post(channels[0].source, channels[0].username, channels[0].media)
-       await client.sendMessage("usxnews_en", {message: res.text})
-    }).catch(error => { 
-       client.sendMessage("me", {message: error})
-    })
-    await post(channels[0].source, channels[0].username, channels[0].media)
-  } 
-   if (channelSourceId == 1691865575n) {
-    const translatedMessage = await translatte(mText, {to: "en"}).then(async res => {
-      await post(1691865575n, "usxnews_en", re.texts)
+        let channelSourceId = update.message.peerId.channelId;
+
+        if (channelSourceId == channels[0].source) {
+            const translatedMessage = await translatte(mText, { to: "en" }).then(async res => {
+                await post(channels[0].source, channels[0].username, channels[0].media);
+                await client.sendMessage(`usxnews_en`, { message: res.text });
+            }).catch(error => {
+                client.sendMessage("me", { message: error });
+            });
+            await post(channels[0].source, channels[0].username, channels[0].media);
+        }
     });
-  }
-   if(channelSourceId == channels[1].source) {
-    await post(channels[1].source, channels[1].username, channels[1].media)
-  }
-});
 
-})()
+})();
 
 app.get("/check", (req, res) => {
-  res.status(200).json("Check Passed!")
-})
+    res.status(200).json("Check Passed!");
+});
 
-app.listen(3000, ()=> console.log("listening..8080"))
+app.listen(3000, () => console.log("listening..8080"));
