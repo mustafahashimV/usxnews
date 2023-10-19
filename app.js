@@ -63,6 +63,7 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
         let channelSourceId = update.message.peerId.channelId;
         let aljazeersId = 1007704706n;
         let warmonitorsId = 1625429257n;
+        let forexnewsId = 1502638425n;
 
         if(channelSourceId == warmonitorsId) {
             const translatedMessage = await translatte(mText, { to: "ar" }).then(async res => {
@@ -70,6 +71,10 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
             }).catch(error => {
                 client.sendMessage("me", { message: error });
             });
+        }
+        
+        if(channelSourceId==forexnewsId){
+            await post(forexnewsId, "usxforex", true)
         }
 
         if (channelSourceId == aljazeersId) {
