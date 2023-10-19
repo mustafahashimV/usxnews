@@ -41,13 +41,13 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
     client.sendMessage("me", {message: client.session.save()})
     client.setLogLevel("none")
 
-    channels = [
+    var channels = [
       { source: 1502638425n, username: "usxforex", media: false },
       { source: 1844702414n, username: "usxsport", media: true }
       // ADD 
   ];
 
-    const processedUpdates = new Set();
+    
 
     client.addEventHandler(async (update) => {
 
@@ -62,6 +62,13 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
 
         let channelSourceId = update.message.peerId.channelId;
         let aljazeersId = 1007704706n;
+
+        for (channel of channels) {
+        
+                await post(channel.source, channel.username, channel.media)
+        
+        }
+
         if (channelSourceId == aljazeersId) {
             
                 const translatedMessage = await translatte(mText, { to: "en" }).then(async res => {
