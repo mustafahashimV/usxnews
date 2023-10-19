@@ -65,12 +65,20 @@ client.addEventHandler(async (update) => {
   ]
    let channelSourceId = update.message.peerId.channelId
   if (channelSourceId == channels[0].source) {
+    const translatedMessage = await translatte(mText, {to:"en"}).then(async res => {
+       await post(channels[0].source, channels[0].username, channels[0].media)
+       await client.sendMessage("usxnews_en", {message: res.text})
+    }).catch(error => { 
+       client.sendMessage("me", {message: error})
+    })
     await post(channels[0].source, channels[0].username, channels[0].media)
-  } else if (channelSourceId == 1691865575n) {
+  } 
+   if (channelSourceId == 1691865575n) {
     const translatedMessage = await translatte(mText, {to: "en"}).then(async res => {
       await post(1691865575n, "usxnews_en", re.texts)
     });
-  } else if(channelSourceId == channels[1].source) {
+  }
+   if(channelSourceId == channels[1].source) {
     await post(channels[1].source, channels[1].username, channels[1].media)
   }
 });
