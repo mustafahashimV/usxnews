@@ -63,11 +63,7 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
         let channelSourceId = update.message.peerId.channelId;
         let aljazeersId = 1007704706n;
 
-        for (channel of channels) {
         
-                await post(channel.source, channel.username, channel.media)
-        
-        }
 
         if (channelSourceId == aljazeersId) {
             
