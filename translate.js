@@ -10,6 +10,7 @@ async function tr(to, text) {
 
 const translateText = async (to, text) => {
     const translation = await tr(to, text);
+    console.log(translation)
     return translation
   }
   module.exports = { translateText }
