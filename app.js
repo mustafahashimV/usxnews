@@ -46,65 +46,51 @@ async function processString(inputString) {
             return `🚨${inputString}`;
         }
 
+
+    
+    
+
 (async () => {
-    
-    const client = new TelegramClient(stringSession, apiId, apiHash, { connectionRetries: 5 })
-    await client.start({
-        phoneNumber: process.env.PHONE,
-        password: async () => await input.text('password?'),
-        phoneCode: async () => await input.text('Code ?'),
-        onError: (err) => console.log(err),
-    });
+  
 
-    const twC = new TwitterApi({ 
-
-      appKey: "H9gXt508eE76oV3JVFHFdc2Ds", 
-  
-      appSecret: "MmTyKO7QBP9R0OL1JSrVEt7MrKuACOM8XChAwvTlwhcZc8HQAh", 
-  
-      accessToken: "1649883383999131649-v55vc21ahqWJMO4JC0PPs3wVGVNoLB", 
-  
-      accessSecret: "I2U01Kq1scKCZME2FNqDC5U9IJHW4EbSo52QCAG8AELc8", 
-  
-      bearerToken: "AAAAAAAAAAAAAAAAAAAAACA0qgEAAAAAZQsF1Z1j1jJLidXzBmmyCJdU7P0%3DQxVJcDd0eEy8IpB4ZytmXZMjAyNHGFdOnMYDwwyEcrXX2c6rkS", 
-  }); 
-    const rwClient = twC.readWrite;
- 
-    console.log('connected.')
-    client.sendMessage("me", {message: client.session.save()})
-    client.setLogLevel("none")
-    
-
-    client.addEventHandler( async (update) => {
+  client.addEventHandler(async (update) => {
     let mText = await processString(update.message.message);
-    
-      update.message.message = mText
-      let message = update.message
-    
-    function post(channelFrom, channelTo, media) {
-    if(update.message.peerId.channelId==channelFrom){
+    update.message.message = mText;
+    let message = update.message;
 
-    client.sendMessage(`${channelTo}`, { message: media ? message : mText })
-      
+    function post(sourceChannelId, targetChannelUsername, media) {
+      for (const mapping of channelMappings) {
+        if (update.message.peerId.channelId === sourceChannelId) {
+          client.sendMessage(targetChannelUsername, { message: media ? message : mText });
+        }
       }
     }
 
-    let channels = [
-      { source: 1007704706n, username: "usxbreaking", media: false},
-      { source: 1844702414n, username: "usxsport", media: true}
-    ]
+    // Define your channel mappings here
+    const channelMappings = [
+      { sourceChannelId: 1007704706n, targetChannelUsername: "usxbreaking", media: false },
+      { sourceChannelId: 1844702414n, targetChannelUsername: "usxsport", media: true },
+      // Add more channel mappings as needed
+    ];
 
-    
-      post(channels[0].source, channels[0].username, channels[0].media);
-      post(channels[1].source, channels[1].username, channels[1].media)
-    
-    if(update.message.peerId.channelId == 1691865575n){
-        msg = await translateText("en", update.message.message)
-       client.sendMessage("usxnews_en", { message: msg })
+    for (const mapping of channelMappings) {
+      post(mapping.sourceChannelId, mapping.targetChannelUsername, mapping.media);
     }
-        
-});
-})()
+
+    if (update.message.peerId.channelId === 1691865575n) {
+      msg = await translateText("en", update.message.message);
+      client.sendMessage("usxnews_en", { message: msg });
+    }
+
+    // Check if the message is coming from "usx_breaking" and send it to "usxnews_en"
+    if (update.message.peerId.channelId === 1007704706n) {
+      const translatedMessage = await translateText("en", update.message.message);
+      client.sendMessage("usxnews_en", { message: translatedMessage });
+    }
+  });
+})();
+
+
 
 app.get("/check", (req, res) => {
   res.status(200).json("Check Passed!")
