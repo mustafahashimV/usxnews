@@ -44,34 +44,34 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
     client.sendMessage("me", {message: client.session.save()})
     client.setLogLevel("none")
     
-    client.addEventHandler( async (update) => {
-    let mText = await filter.filter(update.message.message);
-    update.message.message = mText;
-    
-    let message = update.message;
-    
-    async function post(channelFrom, channelTo, media) {
-    if(update.message.peerId.channelId == channelFrom){
-      await client.sendMessage(`${channelTo}`, { message: media ? message : mText });
-     }
-    }
+    // ...
+client.addEventHandler(async (update) => {
+  let mText = await filter.filter(update.message.message);
+  update.message.message = mText;
 
-    let channels = [
-      { source: 1007704706n, username: "usxbreaking", media: false},
-      { source: 1844702414n, username: "usxsport", media: true}
-    ]
-    
-    if(update.message.peerId.channelId == 1691865575n){
-        msg = translateText("en", update.message.message).then(tm => {
-          client.sendMessage("usxnews_en", {message: tm})
-        })
-    } else {
-      for (channel of channels) {
-        post(channel.source, channel.username, channel.media)
-      }
+  let message = update.message;
+
+  async function post(channelFrom, channelTo, media) {
+    if (update.message.peerId.channelId == channelFrom) {
+      await client.sendMessage(`${channelTo}`, { message: media ? message : mText });
     }
-        
+  }
+
+  let channels = [
+    { source: 1007704706n, username: "usxbreaking", media: false },
+    { source: 1844702414n, username: "usxsport", media: true }
+  ]
+
+  if (update.message.peerId.channelId == 1691865575n) {
+    const translatedMessage = await translate.translateText("en", update.message.message);
+    await client.sendMessage("usxnews_en", { message: translatedMessage });
+  } else {
+    for (channel of channels) {
+      post(channel.source, channel.username, channel.media);
+    }
+  }
 });
+
 })()
 
 app.get("/check", (req, res) => {
