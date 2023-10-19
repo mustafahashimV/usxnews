@@ -53,7 +53,7 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
 
         let mText = await filter.filter(update.message.message);
         update.message.message = mText;
-
+        let message = update.message
         async function post(channelFrom, channelTo, media) {
             if (update.message.peerId.channelId == channelFrom) {
                 await client.sendMessage(`${channelTo}`, { message: media ? message : mText });
