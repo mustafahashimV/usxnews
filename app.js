@@ -1,6 +1,7 @@
 
 
 
+
 const dotenv = require("dotenv").config()
 const { Api, TelegramClient } = require('telegram')
 const { StringSession } = require('telegram/sessions')
@@ -45,30 +46,31 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
     client.setLogLevel("none")
     
     // ...
+
 client.addEventHandler(async (update) => {
   let mText = await filter.filter(update.message.message);
   update.message.message = mText;
 
   let message = update.message;
 
+  let sentChannels = [];
+
   async function post(channelFrom, channelTo, media) {
-    if (update.message.peerId.channelId == channelFrom) {
+    if (update.message.peerId.channelId == channelFrom && !sentChannels.includes(channelTo)) {
       await client.sendMessage(`${channelTo}`, { message: media ? message : mText });
+      sentChannels.push(channelTo);
     }
   }
 
   let channels = [
     { source: 1007704706n, username: "usxbreaking", media: false },
-    { source: 1844702414n, username: "usxsport", media: true }
+    { source: 1844702414n, username: "usxsport", media: true },
+    // Add more channels as needed
   ]
 
   if (update.message.peerId.channelId == 1691865575n) {
-    try{
     const translatedMessage = await translate.translateText("en", update.message.message);
     await client.sendMessage("usxnews_en", { message: translatedMessage });
-    } catch (error) {
-      console.log(error)
-    }
   } else {
     for (channel of channels) {
       post(channel.source, channel.username, channel.media);
