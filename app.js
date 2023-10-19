@@ -63,7 +63,7 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
         let channelSourceId = update.message.peerId.channelId;
         let aljazeersId = 1007704706n;
         let warmonitorsId = 1625429257n;
-        let forexnewsId = 1502638425n;
+        let forexnewsId = 1795334810n;
 
         if(channelSourceId == warmonitorsId) {
             const translatedMessage = await translatte(mText, { to: "ar" }).then(async res => {
