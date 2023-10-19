@@ -57,8 +57,8 @@ async function processString(inputString) {
     let message = update.message;
 
 const channels = [
-      { sourceChannelId: 1007704706n, targetChannelUsername: "usxbreaking", media: false },
-      { sourceChannelId: 1844702414n, targetChannelUsername: "usxsport", media: true },
+      { sourceChannelId: 1007704706n, "usxbreaking": "usxbreaking", media: false },
+      { sourceChannelId: 1844702414n, "usxsport": "usxsport", media: true },
     ];
 
     function post(sourceChannelId, targetChannelUsername, media) {
