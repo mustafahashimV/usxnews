@@ -63,8 +63,12 @@ client.addEventHandler(async (update) => {
   ]
 
   if (update.message.peerId.channelId == 1691865575n) {
+    try{
     const translatedMessage = await translate.translateText("en", update.message.message);
     await client.sendMessage("usxnews_en", { message: translatedMessage });
+    } catch (error) {
+      console.log(error)
+    }
   } else {
     for (channel of channels) {
       post(channel.source, channel.username, channel.media);
