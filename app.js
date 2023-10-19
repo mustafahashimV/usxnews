@@ -62,8 +62,9 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
     ]
     
     if(update.message.peerId.channelId == 1691865575n){
-        msg = await translateText("en", update.message.message)
-       client.sendMessage("usxnews_en", { message: msg })
+        msg = translateText("en", update.message.message).then(tm => {
+          client.sendMessage("usxnews_en", {message: tm})
+        })
     } else {
       for (channel of channels) {
         post(channel.source, channel.username, channel.media)
