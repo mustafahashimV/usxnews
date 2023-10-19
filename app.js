@@ -10,41 +10,10 @@ const app = express()
 const apiId = Number(process.env.API_ID)
 const apiHash = process.env.API_HASH
 const { TwitterApi } = require("twitter-api-v2"); 
-const { translate } = require('bing-translate-api');
 
-const stringSession = new StringSession('1AgAOMTQ5LjE1NC4xNjcuNTEBu45+DxUf9oi5mz4OFPHreBI1X6awevbqBsvs9fdSs3TQAxzAWrmAx+3lVp2iSqwjGfzZ/yIbQgj5l5IXFw+ThC3SsnkE97yqNLUOrTpwyzmEOOGIc5wLa2cyRud8Jtgy/OWvP//pj2iY9lAv40+2MQr5CrQDxlRZvqdYwghFbJAD0n5fyMavSXcOZ7h4w4g7SN67Ab8vOpL7ihOXBzlBZD/bJF0Q0Sj6gPzmCObc5IfVHuiImz2JgW83ZYZXEmeCuqn+BahKgcUxwjZ/nxQFrwvp0LAEeTuI6G+IFCAtgDve7+8+ivCm8Z7LrGhGvqEjMjWls0DtW0kyAtQ4JFB/c3k=');
-
-
-async function tr(to, text) {
-  try {
-    const res = await translate(text, null, to, false);
-    return res.translation;
-  } catch (error) {
-    
-    return "#The_American_News";
-  }
-}
-
-async function translateText(to, text) {
-  const translation = await tr(to, text);
-}
-
-async function processString(inputString) {
-          inputString = inputString.replace(/الجزيرة مباشر/g, 'الأنباء الأمريكية');
-          inputString = inputString.replace(/للجزيرة مباشر/g, 'للأنباء الأمريكية');
-          inputString = inputString.replace(/للجزيرة/g, "للأنباء الأمريكية");
-          inputString = inputString.replace(/#الجزيرة/g, "#الانباء_الامريكية");
-          inputString = inputString.replace(/(https?|ftp):\/\/[^\s/$.?#].[^\s]*/g, '');
-          inputString = inputString.replace(/عاجل \|?/g, "")
-
-          inputString = inputString.replace(/أخبار الكرة العالمية/g, 'الأنباء الأمريكية');
-          inputString = inputString.replace(/اخبار الكرة العالمية/g, 'الأنباء الأمريكية');
-          inputString = inputString.replace(/(https?|ftp):\/\/[^\s/$.?#].[^\s]*/g, '');
-          inputString = inputString.replace(/اخـبـار الـكـرة الـعـالـمـيـة/g, "الأنباء الأمريكية")
-          inputString = inputString.replace(/⚡️/g, "")  
-            
-            return `🚨${inputString}`;
-        }
+const translate = require("./translate.js")
+const filter = require("./filters.js")
+const stringSession = new StringSession(process.env.STRING_SESSION);  
 
 (async () => {
     
@@ -58,49 +27,47 @@ async function processString(inputString) {
 
     const twC = new TwitterApi({ 
 
-      appKey: "H9gXt508eE76oV3JVFHFdc2Ds", 
+      appKey: process.env.XAPP_KEY, 
   
-      appSecret: "MmTyKO7QBP9R0OL1JSrVEt7MrKuACOM8XChAwvTlwhcZc8HQAh", 
+      appSecret: process.env.XAPP_SECRET, 
   
-      accessToken: "1649883383999131649-v55vc21ahqWJMO4JC0PPs3wVGVNoLB", 
+      accessToken: process.env.XACCESS_TOKEN, 
   
-      accessSecret: "I2U01Kq1scKCZME2FNqDC5U9IJHW4EbSo52QCAG8AELc8", 
+      accessSecret: process.env.XACCESS_SECRET, 
   
-      bearerToken: "AAAAAAAAAAAAAAAAAAAAACA0qgEAAAAAZQsF1Z1j1jJLidXzBmmyCJdU7P0%3DQxVJcDd0eEy8IpB4ZytmXZMjAyNHGFdOnMYDwwyEcrXX2c6rkS", 
-  }); 
+      bearerToken: process.env.XBEARER_TOKEN, 
+  });
+
     const rwClient = twC.readWrite;
  
     console.log('connected.')
     client.sendMessage("me", {message: client.session.save()})
     client.setLogLevel("none")
     
-
     client.addEventHandler( async (update) => {
-    let mText = await processString(update.message.message);
+    let mText = await filter.filter(update.message.message);
+    update.message.message = mText;
     
-      update.message.message = mText
-      let message = update.message
+    let message = update.message;
     
-    function post(channelFrom, channelTo, media) {
-    if(update.message.peerId.channelId==channelFrom){
-
-    client.sendMessage(`${channelTo}`, { message: media ? message : mText })
-      
-      }
+    async function post(channelFrom, channelTo, media) {
+    if(update.message.peerId.channelId == channelFrom){
+      await client.sendMessage(`${channelTo}`, { message: media ? message : mText });
+     }
     }
 
     let channels = [
       { source: 1007704706n, username: "usxbreaking", media: false},
       { source: 1844702414n, username: "usxsport", media: true}
     ]
-
-    await channels.forEach(channel => {
-      post(channel.source, channel.username, channel.media);
-    });
     
     if(update.message.peerId.channelId == 1691865575n){
         msg = await translateText("en", update.message.message)
        client.sendMessage("usxnews_en", { message: msg })
+    } else {
+      for (channel of channels) {
+        post(channel.source, channel.username, channel.media)
+      }
     }
         
 });
