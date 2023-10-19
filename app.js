@@ -82,8 +82,7 @@ const channels = [
 
 
 })();
-
-
+})
 
 app.get("/check", (req, res) => {
   res.status(200).json("Check Passed!")
