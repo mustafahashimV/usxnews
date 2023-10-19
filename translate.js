@@ -4,7 +4,7 @@ async function tr(to, text) {
       let res = await translate(text, null, to, false);
       return res.translation;
     } catch (error) {
-      return "#The_American_News";
+      return "#The_American_News" + error;
     }
   }
 
