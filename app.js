@@ -94,9 +94,9 @@ async function processString(inputString) {
       { source: 1844702414n, username: "usxsport", media: true}
     ]
 
-    await channels.forEach(channel => {
-      post(channel.source, channel.username, channel.media);
-    });
+    
+      post(channels[0].source, channels[0].username, channels[0].media);
+      post(channels[1].source, channels[1].username, channels[1].media)
     
     if(update.message.peerId.channelId == 1691865575n){
         msg = await translateText("en", update.message.message)
