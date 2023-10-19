@@ -67,7 +67,7 @@ client.addEventHandler(async (update) => {
   if (channelSourceId == channels[0].source) {
     await post(channels[0].source, channels[0].username, channels[0].media)
   } else if (channelSourceId == 1691865575n) {
-    const translatedMessage = await translatte(mText, {to: "en"}).then(res => {
+    const translatedMessage = await translatte(mText, {to: "en"}).then(async res => {
       await post(1691865575n, "usxnews_en", re.texts)
     });
   } else if(channelSourceId == channels[1].source) {
