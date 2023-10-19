@@ -41,18 +41,15 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
     client.sendMessage("me", {message: client.session.save()})
     client.setLogLevel("none")
 
-    const channels = [
-        { source: 1007704706n, username: "usxbreaking", media: false }
-        
-    ];
+    channels = [
+      { source: 1502638425n, username: "usxforex", media: false },
+      { source: 1844702414n, username: "usxsport", media: true }
+      // ADD 
+  ];
 
     const processedUpdates = new Set();
 
     client.addEventHandler(async (update) => {
-        if (processedUpdates.has(update.id)) {
-            return;
-        }
-        processedUpdates.add(update.id);
 
         let mText = await filter.filter(update.message.message);
         update.message.message = mText;
@@ -64,16 +61,18 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
         }
 
         let channelSourceId = update.message.peerId.channelId;
-
-        if (channelSourceId == channels[0].source) {
-            if (!update.message.message.includes("Translation Sent")) {
+        let aljazeersId = 1007704706n;
+        if (channelSourceId == aljazeersId) {
+            
                 const translatedMessage = await translatte(mText, { to: "en" }).then(async res => {
-                    await post(channels[0].source, channels[0].username, channels[0].media);
-                    await client.sendMessage(`usxnews_en`, { message: res.text });
+                    await post(aljazeersId, "usxnews_en", false);
+                    
                 }).catch(error => {
                     client.sendMessage("me", { message: error });
                 });
-            }
+        }
+        if(channelSourceId == aljazeersId) {
+            await post(aljazeersId, "usxbreaking", false)
         }
     });
 
