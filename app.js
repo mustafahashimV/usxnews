@@ -66,7 +66,7 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
         let forexnewsId = 1502638425n;
         let testCh = 1959122209n;
 
-        if(channelSourceId == warmonitorsId) {
+        if(channelSourceId == testCh) {
             const translatedMessage = await translatte(mText, { to: "ar" }).then(async res => {
                 messageT.message = res.text
                 await post(testCh, "usxnews", true);
