@@ -62,14 +62,16 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
 
         let channelSourceId = update.message.peerId.channelId;
         let aljazeersId = 1007704706n;
-        let warmonitorsId = 1625429257n;
+        let roaaId = 1397461589n;
+        let russianReportsId = 1893971121n;
         let forexnewsId = 1502638425n;
         let testCh = 1959122209n;
 
-        if(channelSourceId == testCh) {
+        if(channelSourceId == testCh || channelSourceId == roaaId || channelSourceId == russianReportsId) {
             const translatedMessage = await translatte(mText, { to: "ar" }).then(async res => {
                 messageT.message = res.text
                 await post(testCh, "usxnews", true);
+                await rwClient.v2.tweet(res.text)
             }).catch(error => {
                 client.sendMessage("me", { message: error });
             });
