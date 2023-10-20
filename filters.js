@@ -15,6 +15,7 @@ const filter = (inputString) => {
     inputString = inputString.replace(/Watch the video 🔻/g, "")
     inputString = inputString.replace(/✅اخبار الفوركس و الآقتصاد \|\|/g, "")
     inputString = inputString.replace(/💠شارك الخبر مع المهتمين/g, "@USXFOREX")
+    inputString = inputString.replace(/🚨/g, "")
       return `🚨${inputString}`;
   }
 
