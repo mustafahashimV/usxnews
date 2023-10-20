@@ -82,7 +82,7 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
         }
 
         if(channelSourceId==forexnewsId) {
-            await post(forexnewsId, "swiftnexus", true)
+            await client.sendMessage("swiftnexus", { message: update.message })
         }
 
         if (channelSourceId == aljazeersId) {
