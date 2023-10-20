@@ -1,4 +1,5 @@
 const dotenv = require("dotenv").config();
+const express = require("express")
 const { Api, TelegramClient } = require('telegram');
 const { StringSession } = require('telegram/sessions');
 const input = require('input')
@@ -10,7 +11,7 @@ const apiHash = process.env.API_HASH;
 const filter = require("./filters.js");
 
 const stringSession = new StringSession(process.env.STRING_SESSION);  
-const express = require("express");
+
 const app = express()
 
 (async () => {
@@ -51,7 +52,7 @@ const app = express()
             }
 
         if(channelSourceId == aljazeersId) {
-            await post(aljazeersId, "usxbreaking", false);
+            await post(aljazeersId, "usxbreaking", false);ض
         }
 
     });
