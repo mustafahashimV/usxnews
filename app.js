@@ -40,20 +40,13 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
     console.log('connected.')
     client.sendMessage("me", {message: client.session.save()})
     client.setLogLevel("none")
-
-    var channels = [
-      { source: 1502638425n, username: "usxforex", media: false },
-      { source: 1844702414n, username: "usxsport", media: true }
-      // ADD 
-  ];
-
     
-
     client.addEventHandler(async (update) => {
 
         let mText = await filter.filter(update.message.message);
         update.message.message = mText;
         var messageT = update.message
+
         async function post(channelFrom, channelTo, media) {
             if (update.message.peerId.channelId == channelFrom) {
                 await client.sendMessage(`${channelTo}`, { message: media ? messageT : mText });
@@ -61,6 +54,7 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
         }
 
         let channelSourceId = update.message.peerId.channelId;
+
         let aljazeersId = 1007704706n;
         let roaaId = 1397461589n;
         let russianReportsId = 1893971121n;
@@ -70,20 +64,17 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
         if(channelSourceId == testCh || channelSourceId == roaaId || channelSourceId == russianReportsId) {
             const translatedMessage = await translatte(mText, { to: "ar" }).then(async res => {
                 messageT.message = res.text
-                await post(testCh, "usxnews", true);
-        
+                await post(russianReportsId || roaaId, "usxnews", true);
             }).catch(error => {
                 client.sendMessage("me", { message: error });
             });
         }
         
-        if(channelSourceId==forexnewsId){
+        
             await post(forexnewsId, "usxforex", true)
-        }
-
-        if(channelSourceId==forexnewsId) {
-            await client.sendMessage("swiftnexus", { message: update.message })
-        }
+        
+            await post(forexnewsId, "swiftnexus", true)
+        
 
         if (channelSourceId == aljazeersId) {
             
@@ -94,9 +85,9 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
                     client.sendMessage("me", { message: error });
                 });
         }
-        if(channelSourceId == aljazeersId) {
-            await post(aljazeersId, "usxbreaking", false)
-        }
+        
+        await post(aljazeersId, "usxbreaking", false)
+        
     });
 
 })();
