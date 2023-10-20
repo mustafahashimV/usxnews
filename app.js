@@ -71,7 +71,7 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
             const translatedMessage = await translatte(mText, { to: "ar" }).then(async res => {
                 messageT.message = res.text
                 await post(testCh, "usxnews", true);
-                await rwClient.v2.tweet(res.text)
+        
             }).catch(error => {
                 client.sendMessage("me", { message: error });
             });
@@ -79,7 +79,9 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
         
         if(channelSourceId==forexnewsId){
             await post(forexnewsId, "usxforex", true)
-            
+        }
+
+        if(channelSourceId==forexnewsId) {
             await post(forexnewsId, "swiftnexus", true)
         }
 
