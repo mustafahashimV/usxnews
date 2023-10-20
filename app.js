@@ -75,9 +75,8 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
         
         if(channelSourceId==forexnewsId){
             await post(forexnewsId, "usxforex", true)
-            let snm = update.message
-            snm.message = snm.message.message + "\n @swiftnexus"
-            await client.sendMessage("swiftnexus", {message: snm})
+            
+            await post(forexnewsId, "swiftnexus", true)
         }
 
         if (channelSourceId == aljazeersId) {
