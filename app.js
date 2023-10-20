@@ -1,9 +1,10 @@
 const dotenv = require("dotenv").config();
-const express = require("express")
 const { Api, TelegramClient } = require('telegram');
 const { StringSession } = require('telegram/sessions');
 const input = require('input')
 const translatte = require("translatte");
+const express = require('express');
+const app = express();
 
 const apiId = Number(process.env.API_ID);
 const apiHash = process.env.API_HASH;
@@ -11,8 +12,6 @@ const apiHash = process.env.API_HASH;
 const filter = require("./filters.js");
 
 const stringSession = new StringSession(process.env.STRING_SESSION);  
-
-const app = express()
 
 (async () => {
     const client = new TelegramClient(stringSession, apiId, apiHash, { connectionRetries: 5 })
@@ -62,4 +61,6 @@ app.get("/check", (req, res) => {
     res.status(200).json("Check Passed!");
 });
 
-app.listen(3000, () => console.log("listening..3000"));
+app.listen(3000, () => {
+    console.log("3000P")
+});
