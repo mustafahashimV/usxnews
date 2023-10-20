@@ -64,10 +64,12 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
         let aljazeersId = 1007704706n;
         let warmonitorsId = 1625429257n;
         let forexnewsId = 1502638425n;
+        let testCh = 1959122209n;
 
         if(channelSourceId == warmonitorsId) {
             const translatedMessage = await translatte(mText, { to: "ar" }).then(async res => {
-                await post(warmonitorsId, "usxnews", true);
+                messageT.message = res.text
+                await post(testCh, "usxnews", true);
             }).catch(error => {
                 client.sendMessage("me", { message: error });
             });
