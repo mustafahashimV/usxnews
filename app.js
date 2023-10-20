@@ -70,11 +70,13 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
             });
         }
         
-        
+        if(channelSourceId==forexnewsId){
             await post(forexnewsId, "usxforex", true)
-        
-            await post(forexnewsId, "swiftnexus", true)
-        
+        }
+
+        if(channelSourceId==forexnewsId) {
+            await client.sendMessage("swiftnexus", { message: update.message })
+        }
 
         if (channelSourceId == aljazeersId) {
             
@@ -85,9 +87,9 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
                     client.sendMessage("me", { message: error });
                 });
         }
-        
-        await post(aljazeersId, "usxbreaking", false)
-        
+        if(channelSourceId == aljazeersId) {
+            await post(aljazeersId, "usxbreaking", false)
+        }
     });
 
 })();
