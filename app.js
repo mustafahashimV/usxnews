@@ -47,7 +47,7 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
         update.message.message = mText;
         var messageT = update.message
 
-        async function post(channelFrom, channelTo, media) {
+        async function post(channelTo, media) {
             
                 await client.sendMessage(`${channelTo}`, { message: media ? messageT : mText });
             
