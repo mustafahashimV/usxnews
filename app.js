@@ -47,7 +47,7 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
         update.message.message = mText;
         var messageT = update.message
 
-        async function post(channelTo, media) {
+        async function post(channelFrom, channelTo, media) {
             
                 await client.sendMessage(`${channelTo}`, { message: media ? messageT : mText });
             
@@ -64,14 +64,14 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
         if(channelSourceId == testCh || channelSourceId == roaaId || channelSourceId == russianReportsId) {
             const translatedMessage = await translatte(mText, { to: "ar" }).then(async res => {
                 messageT.message = res.text
-                await post("usxnews", true);
+                await post(russianReportsId, "usxnews", true);
             }).catch(error => {
                 client.sendMessage("me", { message: error });
             });
         }
         
         if(channelSourceId==forexnewsId){
-            await post("usxforex", true)
+            await post(forexnewsId, "usxforex", true)
         }
 
         if(channelSourceId==forexnewsId) {
@@ -88,7 +88,7 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
                 });
         }
         if(channelSourceId == aljazeersId) {
-            await post("usxbreaking", false)
+            await post(aljazeersId, "usxbreaking", false)
         }
     });
 
