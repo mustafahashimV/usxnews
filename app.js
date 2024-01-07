@@ -46,7 +46,7 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
         if (channelSourceId == aljazeersId) {
     
                 const translatedMessage = await translatte(mText, { to: "en" }).then(async res => {
-                await client.sendMessage("usxnews_en", { message: res.text })
+                await client.sendMessage("aljazeera_e", { message: res.text })
                 }).catch(error => {
                     client.sendMessage("me", { message: error });
                 });
