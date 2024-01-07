@@ -34,6 +34,11 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
         update.message.message = mText;
         var messageT = update.message
 
+        if(messageT == "BREAKING |  @AJENQ"){
+
+        } else {
+
+        
         async function post(channelFrom, channelTo, media) {
             await client.sendMessage(`${channelTo}`, { message: media ? messageT : mText }); 
         }
@@ -55,7 +60,7 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
         if(channelSourceId == aljazeersId) {
             await post(aljazeersId, "usxbreaking", false);
         }
-
+    }
     });
 })();
 
