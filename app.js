@@ -51,7 +51,7 @@ const stringSession = new StringSession(process.env.STRING_SESSION);
             }
 
         if(channelSourceId == aljazeersId) {
-            await post(aljazeersId, "usxbreaking", false);ض
+            await post(aljazeersId, "usxbreaking", false);
         }
 
     });
